@@ -15,11 +15,11 @@ Pantalla De Inicio - Registro
 [Mockup1](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup1.png)
 
 Pantalla De Inicio - Login
-[Mockup1](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup2.png)
+[Mockup2](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup2.png)
 
 Pantalla De Selección
-[Mockup1](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup3.png)
+[Mockup3](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup3.png)
 
 Pantalla De Ingredientes
-[Mockup1](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup4.png)
+[Mockup4](https://raw.github.com/SaninfomaxUN/Menu_1314/master/codigo_fuente/imagenes/Screenshoot/Mockup4.png)
 
