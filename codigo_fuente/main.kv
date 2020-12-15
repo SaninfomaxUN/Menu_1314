@@ -1,0 +1,1851 @@
+#:import CardTransition kivy.uix.screenmanager.CardTransition
+#:import F kivy.factory.Factory
+
+<Principal>:
+    canvas:
+        Color:
+            rgba: (88/255),(2/255),(84/255),(35/100)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Login>
+    canvas:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+            source: '1314.png'
+    BoxLayout:
+        size_hint_x:0.2
+    BoxLayout:
+        size_hint_x:0.6
+        BoxLayout:
+            orientation: 'vertical'
+
+            BoxLayout:
+                size_hint_y:0.2
+
+            TextInput:
+                id: P1_input_usuario
+                size_hint_y:0.05
+                hint_text: 'Usuario'
+
+            BoxLayout:
+                size_hint_y:0.02
+
+            TextInput:
+                id: P1_input_contra
+                size_hint_y:0.05
+                hint_text: 'Contrasena'
+                password: ''
+
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y:0.05
+                Label:
+                    text: 'Ver contrasena'
+                Switch:
+                    id: contra_on_off
+                    on_touch_down: if self.active is False: P1_input_contra.password = True
+                    on_touch_down: if self.active is True: P1_input_contra.password = False
+
+
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y:0.05
+                Button:
+                    background_color: (108/255),(70/255),(240/255),1
+                    text: 'Registro'
+                    on_press:
+                        root.Principal.transition.direction = 'down'
+                        root.Principal.transition.duration = 0.7
+                        root.Principal.goto_registro()
+                Button:
+                    background_color: (70/255),(240/255),(101/255),1
+                    text: 'Ingresar'
+                    on_press:
+                        root.Principal.transition.direction = 'left'
+                        root.Principal.transition.duration = 0.7
+                        root.inicio_sesion()
+
+
+
+
+            BoxLayout:
+                size_hint_y:0.4
+
+    BoxLayout:
+        size_hint_x:0.2
+
+<Registro>
+    canvas:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            source: '1314-regis.png'
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        size_hint_x:0.2
+    BoxLayout:
+        size_hint_x:0.6
+        BoxLayout:
+            orientation: 'vertical'
+
+            BoxLayout:
+                size_hint_y:0.2
+
+            TextInput:
+                id: P3_input_usuario
+                size_hint_y:0.05
+                hint_text: 'Usuario'
+
+            BoxLayout:
+                size_hint_y:0.02
+
+            TextInput:
+                id: P3_input_contra
+                size_hint_y:0.05
+                hint_text: 'Contrasena'
+                password: ''
+
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y:0.05
+                Label:
+                    text: 'Ver contrasena'
+                Switch:
+                    id: contra_on_off
+                    on_touch_down: if self.active is False: P3_input_contra.password = True
+                    on_touch_down: if self.active is True: P3_input_contra.password = False
+
+
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y:0.05
+                Button:
+                    text: 'Registrarse'
+                    on_press: root.registro_nuevo_usuario()
+                Button:
+                    background_color: (105/255),(240/255),(125/255),1
+                    text: 'Volver'
+                    on_press:
+                        root.Principal.transition.direction = 'up'
+                        root.Principal.transition.duration = 0.7
+                        root.Principal.goto_inicio()
+
+
+            BoxLayout:
+                size_hint_y:0.4
+
+    BoxLayout:
+        size_hint_x:0.2
+
+<Seleccion_ciudad>
+    padding: 10
+    orientation: 'vertical'
+    BoxLayout:
+        padding:10
+        orientation: 'horizontal'
+        Button:
+            text: 'Barranquilla'
+            id: barranquilla
+            on_press: root.ciudadbar()
+            on_press: barranquilla.background_color = (0/255),(255/255),(255/255),1
+            on_press: cartagena.background_color = (1,1,1,1)
+            on_press: bogota.background_color = (1,1,1,1)
+            on_press: medellin.background_color = (1,1,1,1)
+        Button:
+            text: 'Bogota'
+            id: bogota
+            on_press: root.ciudadbog()
+            on_press: bogota.background_color = (0/255),(255/255),(255/255),1
+            on_press: barranquilla.background_color = (1,1,1,1)
+            on_press: cartagena.background_color = (1,1,1,1)
+            on_press: medellin.background_color = (1,1,1,1)
+
+    BoxLayout:
+        padding:10
+        orientation: 'horizontal'
+        Button:
+            id: cartagena
+            text: 'Cartagena'
+            on_press: root.ciudadcar()
+            on_press: cartagena.background_color = (0/255),(255/255),(255/255),1
+            on_press: barranquilla.background_color = (1,1,1,1)
+            on_press: bogota.background_color = (1,1,1,1)
+            on_press: medellin.background_color = (1,1,1,1)
+        Button:
+            id: medellin
+            text: 'Medellin'
+            on_press: root.ciudadmed()
+            on_press: medellin.background_color = (0/255),(255/255),(255/255),1
+            on_press: barranquilla.background_color = (1,1,1,1)
+            on_press: bogota.background_color = (1,1,1,1)
+            on_press: cartagena.background_color = (1,1,1,1)
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint_y: 8
+        Spinner:
+            id: spinner_inicio
+            text: 'Ninguno'
+            values:
+            on_text:
+                if self.text != 'Ninguno': P2_button_siguiente.disabled = False
+                if self.text == 'Ninguno': P2_button_siguiente.disabled = True
+        BoxLayout:
+            size_hint_y:8
+        Button:
+            id: P2_button_siguiente
+            text: 'Siguiente'
+            disabled: True
+            on_press:
+                root.Principal.transition.direction = 'left'
+                root.Principal.transition.duration = 0.5
+                root.Principal.goto_comidas()
+                root.cidad_elegida(spinner_inicio.text,spinner_inicio.values)
+
+
+
+<Restaurantes>
+    orientation: 'vertical'
+    Spinner:
+        id: spinner_incio
+        text: 'Ninguno'
+        values: root.ListaSedes
+        on_text:
+            if self.text != 'Ninguno': P2_button_siguiente.disabled = False
+            if self.text == 'Ninguno': P2_button_siguiente.disabled = True
+    BoxLayout:
+        size_hint_y:8
+    Button:
+        id: P2_button_siguiente
+        text: 'Siguiente'
+        disabled: True
+        on_press:
+            root.Principal.transition.direction = 'left'
+            root.Principal.transition.duration = 0.5
+            root.Principal.goto_comidas()
+
+
+
+
+<Comidas>
+    canvas:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            source: '1314-comidas.png'
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_x:0.4
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint_y:5
+        Button:
+            text: 'Hamburguesas'
+            on_press:
+                root.Principal.transition.direction = 'left'
+                root.Principal.transition.duration = 0.7
+                root.Principal.goto_hamburguesas()
+        BoxLayout:
+            size_hint_y:0.2
+        Button:
+            text: 'Bebidas'
+        BoxLayout:
+            size_hint_y:0.2
+        Button:
+            text: 'Acompanamientos'
+        BoxLayout:
+            size_hint_y:5
+    BoxLayout:
+        size_hint_x:0.4
+
+<MyPopup@Popup>:
+    size_hint_y:0.3
+    BoxLayout:
+        orientation: 'vertical'
+        Spinner:
+            values: 'Home', 'Work', 'Other', 'Custom'
+
+        Button:
+            text: '22123'
+
+
+<Hamburguesas_1>
+
+    TabbedPanel:
+        id: Panel_principal
+        do_default_tab: False
+
+
+        TabbedPanelItem:
+            id: Tab_Pan
+            text: 'Pan'
+
+
+            Accordion:
+                orientation: 'vertical'
+                AccordionItem:
+                    title:'Pan Blanco'
+                    id: Pan_blanco
+
+
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/panes/Pblanco.png'
+                            background_down: 'imagenes/panes/Pblanco.png'
+
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_P1
+                            text: 'Peso del pan en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['35g','50g','100g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del pan en gramos': Sig_Pan1.disabled = False
+                                if self.text == 'Peso del pan en gramos': Sig_Pan1.disabled = True
+
+                        Button:
+                            id: Sig_Pan1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Pan.disabled = True
+                            on_press: Pan_brioche.disabled = True
+                            on_press: Pan_multicereal.disabled = True
+                            on_press: Pan_cristal.disabled = True
+                            on_press: Pan_sesamo.disabled = True
+                            on_press: Spn_P1.disabled = True
+                            on_press: Tab_Queso.disabled = False
+                            on_press: Sig_Pan1.disabled = True
+                            on_press: root.pan(Pan_blanco.title,Spn_P1.text)
+
+
+                AccordionItem:
+                    title:'Pan_Brioche'
+                    id:Pan_brioche
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/panes/Pbrioche.png'
+                            background_down: 'imagenes/panes/Pbrioche.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_P2
+                            text: 'Peso del pan en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['35g','50g','100g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del pan en gramos': Sig_Pan2.disabled = False
+                                if self.text == 'Peso del pan en gramos': Sig_Pan2.disabled = True
+
+                        Button:
+                            id: Sig_Pan2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Pan.disabled = True
+                            on_press: Pan_blanco.disabled = True
+                            on_press: Pan_multicereal.disabled = True
+                            on_press: Pan_cristal.disabled = True
+                            on_press: Pan_sesamo.disabled = True
+                            on_press: Spn_P2.disabled = True
+                            on_press: Tab_Queso.disabled = False
+                            on_press: Sig_Pan2.disabled = True
+                            on_press: root.pan(Pan_brioche.title,Spn_P2.text)
+
+
+
+                AccordionItem:
+                    title:'Pan Multicereal'
+                    id: Pan_multicereal
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/panes/Pcereal.png'
+                            background_down: 'imagenes/panes/Pcereal.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_P3
+                            text: 'Peso del pan en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['35g','50g','100g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del pan en gramos': Sig_Pan3.disabled = False
+                                if self.text == 'Peso del pan en gramos': Sig_Pan3.disabled = True
+
+                        Button:
+                            id: Sig_Pan3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Pan.disabled = True
+                            on_press: Pan_blanco.disabled = True
+                            on_press: Pan_brioche.disabled = True
+                            on_press: Pan_cristal.disabled = True
+                            on_press: Pan_sesamo.disabled = True
+                            on_press: Spn_P3.disabled = True
+                            on_press: Tab_Queso.disabled = False
+                            on_press: Sig_Pan3.disabled = True
+                            on_press: root.pan(Pan_multicereal.title,Spn_P3.text)
+
+
+
+                AccordionItem:
+                    title:'Pan de Cristal'
+                    id: Pan_cristal
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/panes/Pcristal.png'
+                            background_down: 'imagenes/panes/Pcristal.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_P4
+                            text: 'Peso del pan en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['35g','50g','100g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del pan en gramos': Sig_Pan4.disabled = False
+                                if self.text == 'Peso del pan en gramos': Sig_Pan4.disabled = True
+
+                        Button:
+                            id: Sig_Pan4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Pan.disabled = True
+                            on_press: Pan_blanco.disabled = True
+                            on_press: Pan_brioche.disabled = True
+                            on_press: Pan_multicereal.disabled = True
+                            on_press: Pan_sesamo.disabled = True
+                            on_press: Spn_P4.disabled = True
+                            on_press: Tab_Queso.disabled = False
+                            on_press: Sig_Pan4.disabled = True
+                            on_press: root.pan(Pan_cristal.title,Spn_P4.text)
+
+
+                AccordionItem:
+                    title:'Pan de Sesamo'
+                    id: Pan_sesamo
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/panes/Psesamo.png'
+                            background_down: 'imagenes/panes/Psesamo.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_P5
+                            text: 'Peso del pan en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['35g','50g','100g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del pan en gramos': Sig_Pan5.disabled = False
+                                if self.text == 'Peso del pan en gramos': Sig_Pan5.disabled = True
+
+                        Button:
+                            id: Sig_Pan5
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Pan.disabled = True
+                            on_press: Pan_blanco.disabled = True
+                            on_press: Pan_brioche.disabled = True
+                            on_press: Pan_multicereal.disabled = True
+                            on_press: Pan_cristal.disabled = True
+                            on_press: Spn_P5.disabled = True
+                            on_press: Tab_Queso.disabled = False
+                            on_press: Sig_Pan5.disabled = True
+                            on_press: root.pan(Pan_sesamo.title,Spn_P5.text)
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Queso
+            text: 'Queso'
+            disabled: True
+
+
+            Accordion:
+                orientation: 'vertical'
+                AccordionItem:
+                    title:'Queso Cheddar'
+                    id: Que_cheddar
+
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/quesos/QCheddar.png'
+                            background_down: 'imagenes/quesos/QCheddar.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Q1
+                            text: 'Tajadas de Queso en unidades'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['1','2','3','4','5']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tajadas de Queso en unidadesTajadas de Queso en unidades': Sig_Que1.disabled = False
+                                if self.text == 'Tajadas de Queso en unidadesTajadas de Queso en unidades': Sig_Que1.disabled = True
+
+                        Button:
+                            id: Sig_Que1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Que_provolone.disabled = True
+                            on_press: Que_mozzarella.disabled = True
+                            on_press: Que_colby.disabled = True
+                            on_press: Que_no.disabled = True
+                            on_press: Spn_Q1.disabled = True
+                            on_press: Tab_Carne.disabled = False
+                            on_press: Sig_Que1.disabled = True
+                            on_press: root.queso(Que_cheddar.title,Spn_Q1.text)
+
+                AccordionItem:
+                    title:'Queso Provolone'
+                    id: Que_provolone
+
+
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/quesos/QProvolone.png'
+                            background_down: 'imagenes/quesos/QProvolone.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Q2
+                            text: 'Tajadas de Queso en unidades'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['1','2','3','4','5']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tajadas de Queso en unidades': Sig_Que2.disabled = False
+                                if self.text == 'Tajadas de Queso en unidades': Sig_Que2.disabled = True
+
+                        Button:
+                            id: Sig_Que2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Que_cheddar.disabled = True
+                            on_press: Que_mozzarella.disabled = True
+                            on_press: Que_colby.disabled = True
+                            on_press: Que_no.disabled = True
+                            on_press: Spn_Q2.disabled = True
+                            on_press: Tab_Carne.disabled = False
+                            on_press: Sig_Que2.disabled = True
+                            on_press: root.queso(Que_provolone.title,Spn_Q2.text)
+
+                AccordionItem:
+                    title:'Queso Mozzarella'
+                    id: Que_mozzarella
+
+
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/quesos/QMozzarella.png'
+                            background_down: 'imagenes/quesos/QMozzarella.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Q3
+                            text: 'Tajadas de Queso en unidades'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['1','2','3','4','5']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tajadas de Queso en unidades': Sig_Que3.disabled = False
+                                if self.text == 'Tajadas de Queso en unidades': Sig_Que3.disabled = True
+
+                        Button:
+                            id: Sig_Que3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Que_cheddar.disabled = True
+                            on_press: Que_provolone.disabled = True
+                            on_press: Que_colby.disabled = True
+                            on_press: Que_no.disabled = True
+                            on_press: Spn_Q3.disabled = True
+                            on_press: Tab_Carne.disabled = False
+                            on_press: Sig_Que3.disabled = True
+                            on_press: root.queso(Que_mozzarella.title,Spn_Q3.text)
+
+                AccordionItem:
+                    title:'Queso Colby'
+                    id: Que_colby
+
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/quesos/QColby.png'
+                            background_down: 'imagenes/quesos/QColby.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Q4
+                            text: 'Tajadas de Queso en unidades'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['1','2','3','4','5']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tajadas de Queso en unidades': Sig_Que4.disabled = False
+                                if self.text == 'Tajadas de Queso en unidades': Sig_Que4.disabled = True
+
+                        Button:
+                            id: Sig_Que4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Que_cheddar.disabled = True
+                            on_press: Que_provolone.disabled = True
+                            on_press: Que_mozzarella.disabled = True
+                            on_press: Que_no.disabled = True
+                            on_press: Spn_Q4.disabled = True
+                            on_press: Tab_Carne.disabled = False
+                            on_press: Sig_Que4.disabled = True
+                            on_press: root.queso(Que_colby.title,Spn_Q4.text)
+
+
+
+
+                AccordionItem:
+                    title:'Ninguno'
+                    id: Que_no
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/quesos/QNO.png'
+                            background_down: 'imagenes/quesos/QNO.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+
+                        Button:
+                            id: Sig_Que5
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Que_cheddar.disabled = True
+                            on_press: Que_provolone.disabled = True
+                            on_press: Que_mozzarella.disabled = True
+                            on_press: Que_colby.disabled = True
+                            on_press: Spn_Q1.disabled = True
+                            on_press: Tab_Carne.disabled = False
+                            on_press: Sig_Que5.disabled = True
+
+
+
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Carne
+            disabled: True
+            text: 'Carne'
+            Accordion:
+                orientation: 'vertical'
+
+                AccordionItem:
+                    id:Car_1
+                    title:'Hamburguesa de Cerdo'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/carnes/CCerdo.png'
+                            background_down: 'imagenes/carnes/CCerdo.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_C1
+                            text: 'Peso de la carne en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','150g','200g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramos': Sig_Ca1.disabled = False
+                                if self.text == 'Peso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramos': Sig_Ca1.disabled = True
+
+                        Button:
+                            id: Sig_Ca1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_C1.disabled = True
+                            on_press: Sig_Ca1.disabled = True
+                            on_press: Tab_Carne.disabled = True
+                            on_press: Tab_Topping.disabled = False
+                            on_press: root.carne(Car_1.title,Spn_C1.text)
+
+
+
+                AccordionItem:
+                    id:Car_2
+                    title:'Hamburguesa de Kobe'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/carnes/CKobe.png'
+                            background_down: 'imagenes/carnes/CKobe.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_C2
+                            text: 'Peso de la carne en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','150g','200g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramos': Sig_Ca2.disabled = False
+                                if self.text == 'Peso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramos': Sig_Ca2.disabled = True
+
+                        Button:
+                            id: Sig_Ca2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_C2.disabled = True
+                            on_press: Sig_Ca2.disabled = True
+                            on_press: Tab_Carne.disabled = True
+                            on_press: Tab_Topping.disabled = False
+                            on_press: root.carne(Car_2.title,Spn_C2.text)
+
+                AccordionItem:
+                    id:Car_3
+                    title:'Hamburguesa de Pescado'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/carnes/CPesc.png'
+                            background_down: 'imagenes/carnes/CPesc.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_C3
+                            text: 'Peso de la carne en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','150g','200g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramos': Sig_Ca3.disabled = False
+                                if self.text == 'Peso de la carne en gramosPeso de la carne en gramosPeso de la carne en gramos': Sig_Ca3.disabled = True
+
+                        Button:
+                            id: Sig_Ca3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_C3.disabled = True
+                            on_press: Sig_Ca3.disabled = True
+                            on_press: Tab_Carne.disabled = True
+                            on_press: Tab_Topping.disabled = False
+                            on_press: root.carne(Car_3.title,Spn_C3.text)
+
+                AccordionItem:
+                    id:Car_4
+                    title:'Hamburguesa de Pollo'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/carnes/CPollo.png'
+                            background_down: 'imagenes/carnes/CPollo.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_C4
+                            text: 'Peso de la carne en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','150g','200g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de la carne en gramos': Sig_Ca4.disabled = False
+                                if self.text == 'Peso de la carne en gramos': Sig_Ca4.disabled = True
+
+                        Button:
+                            id: Sig_Ca4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_C4.disabled = True
+                            on_press: Sig_Ca4.disabled = True
+                            on_press: Tab_Carne.disabled = True
+                            on_press: Tab_Topping.disabled = False
+                            on_press: root.carne(Car_4.title,Spn_C4.text)
+
+                AccordionItem:
+                    id:Car_5
+                    title:'Hamburguesa Vegetariana'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/carnes/CVeg.png'
+                            background_down: 'imagenes/carnes/CVeg.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_C5
+                            text: 'Peso de la carne en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','150g','200g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de la carne en gramos': Sig_Ca5.disabled = False
+                                if self.text == 'Peso de la carne en gramos': Sig_Ca5.disabled = True
+
+                        Button:
+                            id:Sig_Ca5
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_C5.disabled = True
+                            on_press: Sig_Ca5.disabled = True
+                            on_press: Tab_Carne.disabled = True
+                            on_press: Tab_Topping.disabled = False
+                            on_press: root.carne(Car_5.title,Spn_C5.text)
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Topping
+            disabled: True
+            text: 'Topping'
+            Accordion:
+                orientation: 'vertical'
+
+
+                AccordionItem:
+                    id: To_Cer
+                    title:'Cerdo Desmenuzado'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/toppings/ACerdo.png'
+                            background_down: 'imagenes/toppings/ACerdo.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Tp1
+                            text: 'Peso del topping en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['10g','15g','20g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del topping en gramos': Sig_Tp1.disabled = False
+                                if self.text == 'Peso del topping en gramos': Sig_Tp1.disabled = True
+
+                        Button:
+                            id: Sig_Tp1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Tp1.disabled = True
+                            on_press: Sig_Tp1.disabled = True
+                            on_press: Tab_Topping.disabled = True
+                            on_press: Tab_Vegetal.disabled = False
+                            on_press: To_No.disabled = True
+                            on_press: root.carne(To_Cer.title,Spn_Tp1.text)
+
+
+                AccordionItem:
+                    id: To_Hue
+                    title:'Huevo Frito'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/toppings/AHuevo.png'
+                            background_down: 'imagenes/toppings/AHuevo.png'
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Tp2
+                            text: 'Cantidad de Huevos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['1','2','3','4']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Cantidad de Huevos': Sig_Tp2.disabled = False
+                                if self.text == 'Cantidad de Huevos': Sig_Tp2.disabled = True
+
+                        Button:
+                            id: Sig_Tp2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Tp2.disabled = True
+                            on_press: Sig_Tp2.disabled = True
+                            on_press: Tab_Topping.disabled = True
+                            on_press: Tab_Vegetal.disabled = False
+                            on_press: To_No.disabled = True
+                            on_press: root.carne(To_Hue.title,Spn_Tp2.text)
+
+
+                AccordionItem:
+                    id: To_Ja
+                    title:'Jamon Ahumado'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/toppings/AJamon.png'
+                            background_down: 'imagenes/toppings/AJamon.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Tp3
+                            text: 'Tajadas de Jamon'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['1','2','3','4','5']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tajadas de Jamon': Sig_Tp3.disabled = False
+                                if self.text == 'Tajadas de Jamon': Sig_Tp3.disabled = True
+
+                        Button:
+                            id: Sig_Tp3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Tp3.disabled = True
+                            on_press: Sig_Tp3.disabled = True
+                            on_press: Tab_Topping.disabled = True
+                            on_press: Tab_Vegetal.disabled = False
+                            on_press: To_No.disabled = True
+                            on_press: root.carne(To_Ja.title,Spn_Tp3.text)
+
+                AccordionItem:
+                    id: To_Pa
+                    title:'Pavo'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/toppings/APavo.png'
+                            background_down: 'imagenes/toppings/APavo.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Tp4
+                            text: 'Tajadas de Pavo'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['1','2','3','4','5']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tajadas de Pavo': Sig_Tp4.disabled = False
+                                if self.text == 'Tajadas de Pavo': Sig_Tp4.disabled = True
+
+                        Button:
+                            id: Sig_Tp4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Tp4.disabled = True
+                            on_press: Sig_Tp4.disabled = True
+                            on_press: Tab_Topping.disabled = True
+                            on_press: Tab_Vegetal.disabled = False
+                            on_press: To_No.disabled = True
+                            on_press: root.carne(To_Pa.title,Spn_Tp4.text)
+
+                AccordionItem:
+                    id: To_Toc
+                    title:'Tocineta'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/toppings/ATocineta.png'
+                            background_down: 'imagenes/toppings/ATocineta.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Tp6
+                            text: 'Peso del topping en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['10g','15g','20g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del topping en gramos': Sig_Tp6.disabled = False
+                                if self.text == 'Peso del topping en gramos': Sig_Tp6.disabled = True
+
+                        Button:
+                            id: Sig_Tp6
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Tp6.disabled = True
+                            on_press: Sig_Tp6.disabled = True
+                            on_press: Tab_Topping.disabled = True
+                            on_press: Tab_Vegetal.disabled = False
+                            on_press: To_No.disabled = True
+                            on_press: root.carne(To_Toc.title,Spn_Tp6.text)
+
+
+                AccordionItem:
+                    id: To_No
+                    title:'Ninguno'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/toppings/ANO.png'
+                            background_down: 'imagenes/toppings/ANO.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+
+
+                        Button:
+                            id: Sig_Tp7
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: To_Cer.disabled=True
+                            on_press: To_Hue.disabled=True
+                            on_press: To_Ja.disabled=True
+                            on_press: To_Pa.disabled=True
+                            on_press: To_Toc.disabled=True
+                            on_press: Sig_Tp7.disabled = True
+                            on_press: Tab_Topping.disabled = True
+                            on_press: Tab_Vegetal.disabled = False
+
+
+
+
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Vegetal
+            disabled: True
+            text: 'Vegetales'
+            Accordion:
+                orientation: 'vertical'
+
+
+                AccordionItem:
+                    id:V_Ceb
+                    title:'Cebolla'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/vegetales/VCebollaR.png'
+                            background_down: 'imagenes/vegetales/VCebollaR.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_V1
+                            text: 'Peso de los vegetales en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['20g','30g','40g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de los vegetales en gramos': Sig_V1.disabled = False
+                                if self.text == 'Peso de los vegetales en gramos': Sig_V1.disabled = True
+
+                        Button:
+                            id: Sig_V1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_V1.disabled = True
+                            on_press: Sig_V1.disabled = True
+                            on_press: Tab_Vegetal.disabled = True
+                            on_press: Tab_Salsa.disabled = False
+                            on_press: V_No.disabled = True
+                            on_press: root.vegetales(V_Ceb.title,Spn_V1.text)
+
+
+                AccordionItem:
+                    id:V_Cha
+                    title:'Champinones'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/vegetales/VChampinon.png'
+                            background_down: 'imagenes/vegetales/VChampinon.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_V2
+                            text: 'Peso de los vegetales en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['20g','30g','40g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de los vegetales en gramos': Sig_V2.disabled = False
+                                if self.text == 'Peso de los vegetales en gramos': Sig_V2.disabled = True
+
+                        Button:
+                            id: Sig_V2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_V2.disabled = True
+                            on_press: Sig_V2.disabled = True
+                            on_press: Tab_Vegetal.disabled = True
+                            on_press: Tab_Salsa.disabled = False
+                            on_press: V_No.disabled = True
+                            on_press: root.vegetales(V_Cha.title,Spn_V2.text)
+
+
+                AccordionItem:
+                    id:V_Lec
+                    title:'Lechuga'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/vegetales/VLechuga.png'
+                            background_down: 'imagenes/vegetales/VLechuga.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_V3
+                            text: 'Peso de los vegetales en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['5g','10g','20g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de los vegetales en gramos': Sig_V3.disabled = False
+                                if self.text == 'Peso de los vegetales en gramos': Sig_V3.disabled = True
+
+                        Button:
+                            id: Sig_V3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_V3.disabled = True
+                            on_press: Sig_V3.disabled = True
+                            on_press: Tab_Vegetal.disabled = True
+                            on_press: Tab_Salsa.disabled = False
+                            on_press: V_No.disabled = True
+                            on_press: root.vegetales(V_Lec.title,Spn_V3.text)
+
+
+                AccordionItem:
+                    id:V_Pep
+                    title:'Pepinillos'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/vegetales/VPepinillos.png'
+                            background_down: 'imagenes/vegetales/VPepinillos.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_V4
+                            text: 'Peso de los vegetales en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['20g','30g','40g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de los vegetales en gramos': Sig_V4.disabled = False
+                                if self.text == 'Peso de los vegetales en gramos': Sig_V4.disabled = True
+
+                        Button:
+                            id: Sig_V4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_V4.disabled = True
+                            on_press: Sig_V4.disabled = True
+                            on_press: Tab_Vegetal.disabled = True
+                            on_press: Tab_Salsa.disabled = False
+                            on_press: V_No.disabled = True
+                            on_press: root.vegetales(V_Pep.title,Spn_V4.text)
+
+                AccordionItem:
+                    id:V_Tom
+                    title:'Tomate'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/vegetales/VTomate.png'
+                            background_down: 'imagenes/vegetales/VTomate.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_V5
+                            text: 'Peso de los vegetales en gramos'
+                            pos_hint: {'x': -90, 'y':4.35}
+                            values: ['20g','30g','40g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso de los vegetales en gramos': Sig_V5.disabled = False
+                                if self.text == 'Peso de los vegetales en gramos': Sig_V5.disabled = True
+
+                        Button:
+                            id: Sig_V5
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_V5.disabled = True
+                            on_press: Sig_V5.disabled = True
+                            on_press: Tab_Vegetal.disabled = True
+                            on_press: Tab_Salsa.disabled = False
+                            on_press: V_No.disabled = True
+                            on_press: root.vegetales(V_Tom.title,Spn_V5.text)
+
+
+                AccordionItem:
+                    id: V_No
+                    title:'Ninguno'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/vegetales/VNO.png'
+                            background_down: 'imagenes/vegetales/VNO.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+
+
+                        Button:
+                            id: Sig_V6
+
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: V_Ceb.disabled = True
+                            on_press: V_Cha.disabled = True
+                            on_press: V_Lec.disabled = True
+                            on_press: V_Pep.disabled = True
+                            on_press: V_Tom.disabled = True
+                            on_press: Sig_V6.disabled = True
+                            on_press: Tab_Vegetal.disabled = True
+                            on_press: Tab_Salsa.disabled = False
+
+
+
+
+
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Salsa
+            disabled: True
+            text: 'Salsas'
+            Accordion:
+                orientation: 'vertical'
+                AccordionItem:
+                    id:S_Bbq
+                    title:'Bbq'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/salsas/SalsaBBQ.png'
+                            background_down: 'imagenes/salsas/SalsaBBQ.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_S1
+                            text: 'Cantidad de salsa'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['Poco','Normal','Bastante']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Cantidad de salsa': Sig_S1.disabled = False
+                                if self.text == 'Cantidad de salsa': Sig_S1.disabled = True
+
+                        Button:
+                            id: Sig_S1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_S1.disabled = True
+                            on_press: Sig_S1.disabled = True
+                            on_press: Tab_Bebida.disabled = False
+                            on_press: Tab_Salsa.disabled = True
+                            on_press: S_No.disabled = True
+                            on_press: root.salsa(S_Bbq.title,Spn_S1.text)
+
+
+                AccordionItem:
+                    id:S_K
+                    title:'Ketchup'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/salsas/SalsaK.png'
+                            background_down: 'imagenes/salsas/SalsaK.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_S2
+                            text: 'Cantidad de salsa'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['Poco','Normal','Bastante']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Cantidad de salsa': Sig_S2.disabled = False
+                                if self.text == 'Cantidad de salsa': Sig_S2.disabled = True
+
+                        Button:
+                            id: Sig_S2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_S2.disabled = True
+                            on_press: Sig_S2.disabled = True
+                            on_press: Tab_Bebida.disabled = False
+                            on_press: Tab_Salsa.disabled = True
+                            on_press: S_No.disabled = True
+                            on_press: root.salsa(S_K.title,Spn_S2.text)
+
+
+                AccordionItem:
+                    id:S_Mayo
+                    title:'Mayonesa'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/salsas/SalsaMayo.png'
+                            background_down: 'imagenes/salsas/SalsaMayo.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_S3
+                            text: 'Cantidad de salsa'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['Poco','Normal','Bastante']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Cantidad de salsa': Sig_S3.disabled = False
+                                if self.text == 'Cantidad de salsa': Sig_S3.disabled = True
+
+                        Button:
+                            id: Sig_S3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_S3.disabled = True
+                            on_press: Sig_S3.disabled = True
+                            on_press: Tab_Bebida.disabled = False
+                            on_press: Tab_Salsa.disabled = True
+                            on_press: S_No.disabled = True
+                            on_press: root.salsa(S_Mayo.title,Spn_S3.text)
+
+
+                AccordionItem:
+                    id:S_Mos
+                    title:'Mostaza'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/salsas/SalsaMost.png'
+                            background_down: 'imagenes/salsas/SalsaMost.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_S4
+                            text: 'Cantidad de salsa'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['Poco','Normal','Bastante']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Cantidad de salsa': Sig_S4.disabled = False
+                                if self.text == 'Cantidad de salsa': Sig_S4.disabled = True
+
+                        Button:
+                            id: Sig_S4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_S4.disabled = True
+                            on_press: Sig_S4.disabled = True
+                            on_press: Tab_Bebida.disabled = False
+                            on_press: Tab_Salsa.disabled = True
+                            on_press: S_No.disabled = True
+                            on_press: root.salsa(S_Mos.title,Spn_S4.text)
+
+
+                AccordionItem:
+                    id:S_No
+                    title:'Ninguno'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/salsas/SalsaNO.png'
+                            background_down: 'imagenes/salsas/SalsaNO.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+
+
+                        Button:
+                            id: Sig_S6
+
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: S_Bbq.disabled = True
+                            on_press: S_K.disabled = True
+                            on_press: S_Mayo.disabled = True
+                            on_press: S_Mos.disabled = True
+                            on_press: Sig_S6.disabled = True
+                            on_press: Tab_Bebida.disabled = False
+                            on_press: Tab_Salsa.disabled = True
+
+
+
+
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Bebida
+            disabled: True
+            text: 'Bebidas'
+            Accordion:
+                orientation: 'vertical'
+                AccordionItem:
+                    id:Be_Gas
+                    title:'Gaseosa'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/bebidas/BGase.png'
+                            background_down: 'imagenes/bebidas/BGase.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Be1
+                            text: 'Tamano en onzas'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['8oz','12oz','16oz']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tamano en onzas': Sig_Be1.disabled = False
+                                if self.text == 'Tamano en onzas': Sig_Be1.disabled = True
+
+                        Button:
+                            id: Sig_Be1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Be1.disabled = True
+                            on_press: Sig_Be1.disabled = True
+                            on_press: Tab_Bebida.disabled = True
+                            on_press: Tab_Adicionales.disabled = False
+                            on_press: Be_No.disabled = True
+                            on_press: root.bebida(Be_Gas.title,Spn_Be1.text)
+
+                AccordionItem:
+                    id:Be_Ju
+                    title:'Jugo'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/bebidas/BJugo.png'
+                            background_down: 'imagenes/bebidas/BJugo.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Be2
+                            text: 'Tamano en onzas'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['8oz','12oz','16oz']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tamano en onzas': Sig_Be2.disabled = False
+                                if self.text == 'Tamano en onzas': Sig_Be2.disabled = True
+
+                        Button:
+                            id: Sig_Be2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Be2.disabled = True
+                            on_press: Sig_Be2.disabled = True
+                            on_press: Tab_Bebida.disabled = True
+                            on_press: Tab_Adicionales.disabled = False
+                            on_press: Be_No.disabled = True
+                            on_press: root.bebida(Be_Ju.title,Spn_Be2.text)
+
+                AccordionItem:
+                    id:Be_Li
+                    title:'Limonada'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/bebidas/BLimo.png'
+                            background_down: 'imagenes/bebidas/BLimo.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Be3
+                            text: 'Tamano en onzas'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['8oz','12oz','16oz']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tamano en onzas': Sig_Be3.disabled = False
+                                if self.text == 'Tamano en onzas': Sig_Be3.disabled = True
+
+                        Button:
+                            id: Sig_Be3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Be3.disabled = True
+                            on_press: Sig_Be3.disabled = True
+                            on_press: Tab_Bebida.disabled = True
+                            on_press: Tab_Adicionales.disabled = False
+                            on_press: Be_No.disabled = True
+                            on_press: root.bebida(Be_Li.title,Spn_Be3.text)
+
+
+                AccordionItem:
+                    id:Be_Cer
+                    title:'Cerveza'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/bebidas/BPola.png'
+                            background_down: 'imagenes/bebidas/BPola.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Be4
+                            text: 'Tamano en onzas'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['8oz','12oz','16oz']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Tamano en onzas': Sig_Be4.disabled = False
+                                if self.text == 'Tamano en onzas': Sig_Be4.disabled = True
+
+                        Button:
+                            id: Sig_Be4
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Be4.disabled = True
+                            on_press: Sig_Be4.disabled = True
+                            on_press: Tab_Bebida.disabled = True
+                            on_press: Tab_Adicionales.disabled = False
+                            on_press: Be_No.disabled = True
+                            on_press: root.bebida(Be_Cer.title,Spn_Be4.text)
+
+
+                AccordionItem:
+                    id:Be_No
+                    title:'Ninguno'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/bebidas/BNO.png'
+                            background_down: 'imagenes/bebidas/BNO.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+
+                        Button:
+                            id: Sig_Be5
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Sig_Be5.disabled = True
+                            on_press:Be_Gas.disabled = True
+                            on_press:Be_Ju.disabled = True
+                            on_press:Be_Li.disabled = True
+                            on_press:Be_Cer.disabled = True
+                            on_press: Tab_Bebida.disabled = True
+                            on_press: Tab_Adicionales.disabled = False
+
+
+
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_Adicionales
+            disabled: True
+            text: 'Adiciones'
+            Accordion:
+                orientation: 'vertical'
+
+
+                AccordionItem:
+                    id:Ad_Aro
+                    title:'Aros de Cebolla'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/acompa/AcAros.png'
+                            background_down: 'imagenes/acompa/AcAros.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Ad1
+                            text: 'Peso del adicional en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','200g','300g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del adicional en gramos': Sig_Ad1.disabled = False
+                                if self.text == 'Peso del adicional en gramos': Sig_Ad1.disabled = True
+
+                        Button:
+                            id: Sig_Ad1
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Ad1.disabled = True
+                            on_press: Sig_Ad1.disabled = True
+                            on_press: Tab_Adicionales.disabled = True
+                            on_press: Tab_final.disabled = False
+                            on_press: Ad_No.disabled = True
+                            on_press: root.adiciones(Ad_Aro.title,Spn_Ad1.text)
+
+
+                AccordionItem:
+                    id:Ad_Cas
+                    title:'Cascos de Papa'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/acompa/AcCascos.png'
+                            background_down: 'imagenes/acompa/AcCascos.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Ad2
+                            text: 'Peso del adicional en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','200g','300g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del adicional en gramos': Sig_Ad2.disabled = False
+                                if self.text == 'Peso del adicional en gramos': Sig_Ad2.disabled = True
+
+                        Button:
+                            id: Sig_Ad2
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Ad2.disabled = True
+                            on_press: Sig_Ad2.disabled = True
+                            on_press: Tab_Adicionales.disabled = True
+                            on_press: Tab_final.disabled = False
+                            on_press: Ad_No.disabled = True
+                            on_press: root.adiciones(Ad_Cas.title,Spn_Ad2.text)
+
+                AccordionItem:
+                    id:Ad_Pap
+                    title:'Papas a la Francesa'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/acompa/AcPapas.png'
+                            background_down: 'imagenes/acompa/AcPapas.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+                        Spinner:
+                            id:Spn_Ad3
+                            text: 'Peso del adicional en gramos'
+                            pos_hint: {'x': -90, 'y':4.8}
+                            values: ['100g','200g','300g']
+                            size_hint: 80, 0.5
+                            on_text:
+                                if self.text != 'Peso del adicional en gramos': Sig_Ad3.disabled = False
+                                if self.text == 'Peso del adicional en gramos': Sig_Ad3.disabled = True
+
+                        Button:
+                            id: Sig_Ad3
+                            disabled: True
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Spn_Ad3.disabled = True
+                            on_press: Sig_Ad3.disabled = True
+                            on_press: Tab_Adicionales.disabled = True
+                            on_press: Tab_final.disabled = False
+                            on_press: Ad_No.disabled = True
+                            on_press: root.adiciones(Ad_Pap.title,Spn_Ad3.text)
+
+                AccordionItem:
+                    id:Ad_No
+                    title:'Ninguno'
+                    BoxLayout:
+                        Button:
+                            background_normal: 'imagenes/acompa/AcNO.png'
+                            background_down: 'imagenes/acompa/AcNO.png'
+
+                    FloatLayout:
+
+                        size_hint: 0.01,None
+
+                        Button:
+                            id: Sig_Ad4
+                            text: 'Siguiente'
+                            pos_hint: {'x': -90, 'y':0.09}
+                            size_hint: 80, 0.5
+                            on_press: Tab_Queso.disabled = True
+                            on_press: Ad_Aro.disabled = True
+                            on_press: Ad_Cas.disabled = True
+                            on_press: Ad_Pap.disabled = True
+                            on_press: Sig_Ad4.disabled = True
+                            on_press: Tab_Adicionales.disabled = True
+                            on_press: Tab_final.disabled = False
+
+
+
+
+
+        TabbedPanelItem:
+            id : Tab_final
+            disabled: True
+            text: 'Fin Pedido'
+            Accordion:
+                orientation: 'vertical'
+
+
+                AccordionItem:
+                    orientation: 'vertical'
+                    id:Fin_acor
+                    title:'Fin pedido'
+                    BoxLayout:
+                        orientation: 'vertical'
+
+                        Button:
+                            background_normal: 'imagenes/fin/Fin.png'
+                            background_down: 'imagenes/fin/Fin.png'
+                            on_press: root.finalizar()
+
+                        Label:
+                            id:label_fin
+                            text:
